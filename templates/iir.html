@@ -3,15 +3,15 @@
 
 {% block body%}
 <div class="maindivs alt">
-    <h2>Make your EQ work in HQplayer 4 and 5 !</h2>
+    <h2>Làm cho EQ của bạn hoạt động trên HQplayer 4 và 5 !</h2>
     <form method="POST" action="{{ url_for('iir') }}" enctype="multipart/form-data">
         <input class="ok" type="file" name="file">
-        <button class="op">Submit</button>
+        <button class="op">Gửi</button>
         {% if result != None %}
         <div style="padding-top: 50px;"></div>
         <textarea readonly>{{ string }}</textarea>
         <div style="padding-top: 50px;"></div>
-        <a onclick="iircopy()" class="iirCopy" id="iir" data-iir="{{ string }}">Copy IIR string</a>
+        <a onclick="iircopy()" class="iirCopy" id="iir" data-iir="{{ string }}">Sao chép dãy IIR</a>
         {% endif %}
 </div>
 <script>

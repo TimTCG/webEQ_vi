@@ -18,14 +18,15 @@
 {% if result == None %}
 <div class="tout">
     <div id="presentation" class="maindivs">
-        <h2>- Instant EQ your earphones ! -</h2>
-        <p>EQ is the easiest way to improve sound quality of your audio device, but doing it right isn't easy to do. So
-            with this website, you will be able to EQ your audio device to a neutral
-            target effortlessly :D
+        <h2>- EQ cho tai nghe của bạn ! -</h2>
+        <p>EQ là cách dễ nhất để cải thiện chất lượng âm thanh của bạn (mà không cần phải ra ngoài mà đi mua tai nghe đắt tiền), nhưng để dùng nó đúng cách không dễ đâu.
+            Vì thế, với trang web này, bạn có thể cân bằng thiết bị âm thanh của mình
+            về các tiêu chuẩn một cách dễ dàng :D
+            Website gốc bởi <a href="https://github.com/Shewiiii">Shewiii</a>, Việt hóa bởi <a href="https://shirayamahikari.io.vn">Hikari</a>
         </p>
-        <p class="important">Important, this EQ should be used as a baseline, don't hesitate to custom it to
-            your
-            liking afterwards !</p>
+        <p class="important">Chú ý nha! EQ này chỉ là tham khảo thôi nhé, bạn có thể chỉnh nó
+            theo
+            sở thích của mình sau !</p>
         <div style="padding-top: 10px;"></div>
         <p style="font-family: Segoe UI Bold;font-size: large;"> (*≧︶≦))(￣▽￣* )ゞ</p>
         <div style="padding-top: 10px;"></div>
@@ -41,16 +42,16 @@
 {% if result != None %}
 <div style="padding-top: 20px;"></div>
 <div id="results" class="maindivs">
-    <h3 class="r">- Results -</h3>
+    <h3 class="r">- Kết quả -</h3>
     <p class="r">EQ {{ iem }} -> {{ target }}</p>
     <div class="flexThing">
         <div class="paraEQ">
             <table class="r paratable">
                 <tr>
-                    <th>Filter</th>
-                    <th>Frequency</th>
-                    <th>Gain</th>
-                    <th>Q Value</th>
+                    <th>Bộ lọc</th>
+                    <th>Tấn số</th>
+                    <th>Tăng</th>
+                    <th>Giá trị Q</th>
                 </tr>
                 {% for para in results %}
                 <tr>
@@ -63,16 +64,16 @@
             </table>
         </div>
         <div class="buttons">
-            <a href="{{url_for('wavelet')}}" download='test' class=" dl">Export to Wavelet/EQapo</a>
-            <a href="{{url_for('poweramp')}}" download='test' class="dl">Export to Poweramp</a>
-            <a href="{{url_for('parametric')}}" download='test' class="dl" onclick="listener()">Download Parametric
+            <a href="{{url_for('wavelet')}}" download='test' class=" dl">Xuất cho Wavelet/EQapo</a>
+            <a href="{{url_for('poweramp')}}" download='test' class="dl">Xuất cho Poweramp</a>
+            <a href="{{url_for('parametric')}}" download='test' class="dl" onclick="listener()">Tải Parametric
                 EQ</a>
-            <p id="listener" class="r rcomment" style="display: none;">You probably want to check <a class="link black"
-                    href="https://listener800.github.io/5128" target="_blank">Listener's graph database</a> and the <a
+            <p id="listener" class="r rcomment" style="display: none;">Bạn nên xem <a class="link black"
+                    href="https://listener800.github.io/5128" target="_blank">cơ sở biểu đồ của Listener</a> và <a
                     class="link black" href="https://github.com/Shewiiii/webEQ/tree/main/frequency_responses"
-                    target="_blank">FR folder</a>
-                if you want to make more adjustments ! (you should)</p>
-            <a onclick="iircopy()" class="dl" id="iir" data-iir="{{ iir }}">Copy IIR string</a>
+                    target="_blank">thư mục FRr</a>
+                nếu bạn muốn chỉnh sửa thêm ! (mình khuyên á)</p>
+            <a onclick="iircopy()" class="dl" id="iir" data-iir="{{ iir }}">Sao chép dãy IIR</a>
         </div>
     </div>
     <div style="padding-top: 40px;"></div>
@@ -81,10 +82,10 @@
 </div>
 <div style="padding-top: 50px;"></div>
 <div class="maindivs EQdiv">
-    <h3>- Try it ! -</h3>
+    <h3>- Thử đi nào ! -</h3>
     <form id="EQform" method="POST" action="{{ url_for('resultsAQ') }}">
         <select name="iem" class="mainSelect">
-            <option selected disabled hidden> Choose your device </option>
+            <option selected disabled hidden> Chọn thiết bị của bạn </option>
             {% for iem in FRList %}
             <option> {{ iem }} </option>
             {% endfor %}
@@ -92,104 +93,103 @@
         <h4>EQ to..</h4>
 
         <select name="target" class="mainSelect">
-            <option selected disabled hidden> Choose a target </option>
+            <option selected disabled hidden> Chọn một tiêu chuẩn </option>
             {% for target in targetList %}
             <option> {{ target }} </option>
             {% endfor %}
         </select>
 
         <select name="secretIem" class="mainSelect" style="display: none;">
-            <option selected disabled hidden> Choose another device </option>
+            <option selected disabled hidden> Chọn một thiết bị khác </option>
             {% for iem in FRList %}
             <option> {{ iem }} </option>
             {% endfor %}
         </select>
 
         <div style="padding-top: 30px;"></div>
-        <h4>- Settings -</h4>
+        <h4>- Cài đặt -</h4>
         <div class="flexThing EQoptions">
             <div class="EQoption">
-                <p>Max number of filters:</p>
+                <p>Số bộ lọc tối đa:</p>
                 <select name="filterCount" class="optionSelect">
                     <option value="5"> 5 </option>
                     <option selected="selected" value="10"> 10 </option>
                     <option value="15"> 15 </option>
                     <option value="20"> 20 </option>
                 </select>
-                <p class="idkSelect">Default: 10</p>
+                <p class="idkSelect">Mặc định: 10</p>
             </div>
 
             <div class="EQoption">
-                <p>AutoEQ algorithm</p>
+                <p>Thuật toán AutoEQ</p>
                 <select name="algorithm" class="optionSelect">
-                    <option selected="selected" value="default"> Default </option>
+                    <option selected="selected" value="default"> Mặc định </option>
                     <option value="lochbaum"> Lochbaum </option>
                 </select>
-                <p class="idkSelect">Default: Default</p>
+                <p class="idkSelect">Mặc định: Mặc định</p>
             </div>
 
             <div class="EQoption">
-                <p>EQ the resonant peaks:</p>
+                <p>EQ các đỉnh cộng hưởng:</p>
                 <select name="EQres" class="optionSelect">
-                    <option value="yes"> Yes </option>
-                    <option selected="selected" value="no"> No </option>
+                    <option value="yes"> Có </option>
+                    <option selected="selected" value="no"> Không </option>
                 </select>
-                <p class="idkSelect">Recommended: No</p>
+                <p class="idkSelect">Khuyên dùng: Không</p>
             </div>
 
             <div class="EQoption">
-                <p>Mode:</p>
+                <p>Chế độ:</p>
                 <select name="mode" class="optionSelect">
-                    <option selected="selected" value="standard"> Standard </option>
+                    <option selected="selected" value="standard"> Tiêu chuẩn </option>
                     <option value="moondrop"> Moondrop Free DSP </option>
                 </select>
-                <p class="idkSelect">Default: Standard</p>
+                <p class="idkSelect">Mặc định: Tiêu chuẩn</p>
             </div>
         </div>
-        <p id="eqWarningAQ" class="warning" style="display: none;">Note: Will less EQ above 10kHz to avoid inaccuracies
-            (that's a feature). </p>
-        <p id="eqWarningLO" class="warning">Note: Will EQ the resonant peaks if there are. Make sure to adjust the
-            treble by ear ! </p>
+        <p id="eqWarningAQ" class="warning" style="display: none;">Lưu ý: Sẽ giảm EQ trên 10kHz để tránh sai sót
+            (nó là tính năng đấy). </p>
+        <p id="eqWarningLO" class="warning">Lưu ý: Sẽ EQ các đỉnh cộng hưởng nếu có. Hãy chỉnh lại âm cao cho từng tai nhé ! </p>
         <button id="goButton" type="submit" class="generateButton">Go !</button>
     </form>
     <div id="gekiYabaSecretFeature">
         <p style="text-align: left;" onclick="gekiyaba()">|∀・)</p>
     </div>
     <div class='maindivs hint' style="text-align: left;">
-        <h4 style="margin: 0;">Hint:</h4>
-        <h5>- Headphones -</h5>
-        <p><strong>SoundGuys Target</strong>: Nice balance between neutral and fun (recommended)</p>
-        <p><strong>5128 DF</strong>: Neutral for Headphones</p>
-        <h5>- IEMs or TWS -</h5>
-        <p><strong>SoundGuys Target</strong>: Nice balance between neutral and fun (recommended)</p>
-        <p><strong>Shewi Target</strong>: U-Shaped Target focused on technicalities and immersiveness. My go-to sound
-            profile. I've tried to mix the midrange of the U6t with the bass and the treble of the Storm. Note that you
-            will have to adjust the EQ manually for better results
+        <h4 style="margin: 0;">Gợi ý:</h4>
+        <h5>- Tai nghe chụp tai / trên tai -</h5>
+        <p><strong>SoundGuys Target</strong>: Một sự cân bằng giữa trung lập và vui vẻ (khuyên dùng)</p>
+        <p><strong>5128 DF</strong>: Trung lập cho loại tai nghe này</p>
+        <h5>- IEMs / TWS -</h5>
+        <p><strong>SoundGuys Target</strong>: Một sự cân bằng giữa trung lập và vui vẻ (khuyên dùng)</p>
+        <p><strong>Shewi Target</strong>: Tiêu chuẩn hình chữ U thiên về kỹ thuật và sự đắm chìm. Sự lựa chọn cá nhân của mình.
+            Mình đã thử kết hợp các dãy âm giữa của U6t với âm trầm và âm cao của Storm. Lưu ý rằng bạn
+            nên chỉnh lại EQ bằng tay để mang lại kết quả tốt nhất.
         </p>
-        <p><strong>JM-1</strong>: Neutral for IEMs</p>
-        <p><strong>Harman Beta (2024)</strong>: If you want a sound similar to AutoEQ but more precise</p>
-        <h5>- Settings -</h5>
-        <p><strong>Tilt</strong>: The more the tilt is important, the more it will sound 'dark'. If you prefer a
-            brighter sound, choose
+        <p><strong>JM-1</strong>: Trung lập cho IEMs</p>
+        <p><strong>Harman Beta (2024)</strong>: Nếu bạn muốn chất âm giống với AutoEQ nhưng mà chính xác hơn.</p>
+        <h5>- Cài đặt -</h5>
+        <p><strong>Độ nghiêng</strong>: Độ nghiêng càng nhiều, âm thanh càng 'tối' hơn. Nếu bạn muốn âm thanh
+            sáng hơn, hãy chọn
             -0.8dB/oct.</p>
-        <p><strong>Number of filters</strong>: as the name suggests.</p>
-        <p><strong>3kHz dip</strong>: Reduce the volume of the ear-gain if it sounds too shouty.</p>
-        <p><strong>EQ the resonant peaks</strong>: Sometimes on the graph you can see a dip around 9kHz and a peak at
-            around 7kHz. That is due to
-            the IEM or TWS interacting more at a certain frequency with the measurement rig. Thus, EQing this region can
-            lead to an inaccurate equalization (if that dip is caused by resonance). Disabling this option can help
-            preventing that.</p>
-        <p><strong>Algorithm</strong>: algorithm to use to generate the EQ.</p>
+        <p><strong>Số bộ lọc</strong>: thì như cái tên thôi.</p>
+        <p><strong>giảm 3kHz</strong>: Giảm lượng tăng tai nếu âm thanh quá chói.</p>
+        <p><strong>EQ các đỉnh cộng hưởng</strong>: Đôi khi trên biểu đồ, bạn có thể thấy tần số giảm xuống khoảng 9kHz và đạt mức cao nhất ở
+            khoảng 7kHz. Đó là do
+            IEM hoặc TWS tương tác nhiều hơn ở một tần số nhất định với thiết bị đo. Vì vậy, EQing vùng này có thể
+            dẫn đến sự cân bằng không chính xác (nếu sự sụt giảm đó là do cộng hưởng). Việc tắt tùy chọn này có thể giúp
+            ngăn chặn điều đó.</p>
+        <p><strong>Thuật toán</strong>: thuật toán dùng để tạo EQ.</p>
         <ul>
-            <li>Lochbaum: Aggressive EQ. Match the target better on the full frequency range. Could potentially heavely
-                EQ peaks or dips you don't actually hear, so use it with care.</li>
-            <li>Default (from AutoEQ's library): Safer EQ. Fast and more customizability, and don't EQ too much above
-                10kHz. Will
-                not EQ the resonant peaks by default.</li>
-            <p><strong>Tip !</strong>: try to EQ with different algorithm and number of filters if the EQ you get
-                doesn't satisfy you.</p>
+            <li>Lochbaum: EQ gắt hơn. Phù hợp với mục tiêu tốt hơn trên toàn bộ dải tần. Có khả năng tăng
+                những mức EQ lên cao nhất hoặc thấp nhất mà bạn không thực sự nghe thấy, vì vậy hãy cẩn thận khi sử dụng nó.</li>
+            <li>Mặc định (từ thư viện của AutoEQ): EQ an toàn hơn. Nhanh chóng và có nhiều tùy chỉnh hơn, đồng thời không cần EQ quá nhiều ở trên
+                10kHz. Sẽ
+                không EQ các đỉnh cộng hưởng theo mặc định.</li>
+            <p><strong>Mẹo !</strong>: hãy thử EQ bằng thuật toán và số bộ lọc khác nếu bạn nhận được EQ
+                không làm bạn hài lòng.</p>
         </ul>
-        <p><strong>Mode</strong>: Adapt the generated EQ to a particular device. Can overwrite other options.</p>
+        <p><strong>Chế độ</strong>: Điều chỉnh EQ được tạo cho phù hợp với một thiết bị cụ thể. Có thể ghi đè các tùy chọn khác.</p>
     </div>
     <div style="padding-top: 50px;"></div>
     <div>
@@ -198,83 +198,80 @@
 
     <div style="padding-top: 50px;"></div>
 
-    <h3>- Random infos -</h3>
+    <h3>- Một số thông tin ngẫu nhiên -</h3>
     <div style="text-align: left;">
         <h4>Sources :</h4>
         <p><a class="link" href="https://listener800.github.io/5128" target="_blank">Listener</a>,
-            <a class="link" href="https://forum.headphones.com/u/resolve/summary" target="_blank">Resolve</a> (on the
-            Headphones.com forum or Youtube),
+            <a class="link" href="https://forum.headphones.com/u/resolve/summary" target="_blank">Resolve</a> (trên
+            diễn đàn Headphones.com hoặc Youtube),
             <a class="link" href="https://crinacle.com/graphs/iems/graphtool/" target="_blank">Crinacle</a>,
             <a class="link" href="https://www.soundguys.com/" target="_blank">Soundguys</a>.
-            I've also used <a class="link"
-                href="https://www.reddit.com/r/headphones/comments/1780005/bk_5128_graph_database/" target="_blank">this
-                amazing reddit post</a> to help me scrap the frequency responses.
+            Mình cũng sử dụng <a class="link"
+                href="https://www.reddit.com/r/headphones/comments/1780005/bk_5128_graph_database/" target="_blank">
+            bài đăng tuyệt vời này trên reddit</a> để giúp mình lấy các tần số phản hồi.
         </p>
-        <h4>How these EQ profiles are generated</h4>
-        <p>All the EQ profiles on this website are generated using the AutoEQ Python library by Jaakko Pasanen, and the
-            AutoEQ feature available
-            on many graph tools like <a class="link" href="https://squig.link/" target="_blank">Squiglink</a>, <a
-                class="link" href="https://listener800.github.io/5128" target="_blank">Listener's graph database</a> or
-            <a class="link" href="https://crinacle.com/graphs/iems/graphtool/" target="_blank">Crinacle's IEF graph
-                tool</a> by Marshall Lochbaum.
+        <h4>Các mà những EQ này được tạo</h4>
+        <p>Tất cả các cấu hình EQ trên trang web này được tạo bằng thư viện AutoEQ Python của Jaakko Pasanen và
+            tính năng tự động EQ trên
+            nhiều công cụ biểu đồ như <a class="link" href="https://squig.link/" target="_blank">Squiglink</a>, <a
+                class="link" href="https://listener800.github.io/5128" target="_blank">cơ sở biểu đồ của Listener</a> hoặc
+            <a class="link" href="https://crinacle.com/graphs/iems/graphtool/" target="_blank">Công cự biểu đồ IEF Crinacle </a> của Marshall Lochbaum.
         </p>
-        <p> They are all based on <strong>measurements took on the B&K 5128</strong> or the 4620 (without the head and
-            torso), the most
-            accurate measurement rig available today.
+        <p> Tất cả được dựa trên <strong>các lần kiểm đo với B&K 5128</strong> hoặc 4620 (không có đầu hoặc thân), bộ
+            công cụ căn chỉnh tốt nhất hiện tại.
         </p>
-        <h4>Yes <a class="link" href="https://autoeq.app/" target="_blank">AutoEQ</a> exists, and it's great</h4>
-        <p>This project exists thanks to AutoEQ since I'm using it's Python module ! The website has MUCH more features
-            and models than my website so it's worth checking.
+        <h4>Đúng <a class="link" href="https://autoeq.app/" target="_blank">AutoEQ</a> có á, và nó tốt lắm</h4>
+        <p>Dự án này được thực hiện nhờ thư viện Python của AutoEQ á ! Trang web đó có RẤT nhiều tính năng
+            và mô hình hơn trang web của mình nên rất đáng để xem qua đấy.
         <p>
-            But please note that <strong>if your device is not available with B&K 5128 or 4620 measurements, the EQ will
-                probably
-                be inaccurate, especially for in-ear devices</strong>, because of the inaccurate acoustic input
-            impedence
-            other
-            measurement rigs have.
+            Nhưng hãy nhớ rằng <strong>nếu thiết bị của bạn không có sẵn các phép đo với B&K 5128 hoặc 4620, EQ sẽ
+                có lẽ
+                sẽ có sai sót, đặc biệt là các thiết bị nhét tai</strong>, do trở kháng đầu vào âm thanh
+            không chính xác
+            mà các thiết bị đo khác có.
         </p>
-        <h4>PLEASE don't pay for SoundID/Sonarworks for headphones, it's just eye candy.</h4>
-        <p>I have some problems with that software when it comes to headphones. First,
-            it's paid. Second, you don't know
-            anything about their methodology of EQing. You don't know the rig they are using, you don't (explicitly)
-            know the target they are using,
-            NOTHING. What they are calling flat sound is based on what? on private research, and I refuse to pay for
-            something you know anything about and that you can get for free.
-        <p>I really think what I'm saying, it's not just to tell you "oh wow my website is amazing". EQing
-            using B&K
-            measurements combined with a target you choose and you
-            <strong>know something about</strong> is in my opinion the obvious choice and will lead to much, much better
-            results than SoundID. And guess what? <strong>All the frequency responses measured and the EQ profiles
-                created by autoEQ and
-                suggested here dont't cost you a cent</strong>. You just have to use them with whatever software present
-            on
-            the Results tab (Wavelet and Equalizer APO are free softwares).
+        <h4>VUI LÒNG đừng có trả tiền cho SoundID/Sonarworks với tai nghe, nó không đáng đâu.</h4>
+        <p>Mình có một chút vấn đề với cái phần mềm đó cho tai nghe. Thứ nhất,
+            nó là phần mềm trả phí, thứ hai, mình không biết
+            bất cứ điều gì về phương pháp EQ của họ. Bạn không biết bộ công cụ họ đang sử dụng, bạn không
+             biết (rõ ràng) tiêu chuẩn họ đang sử dụng,
+             KHÔNG CÓ GÌ HẾT. Cái mà họ gọi là âm thanh phẳng là dựa trên cái gì? dựa trên nghiên cứu riêng tư của họ à, và mình từ chối trả tiền cho
+             một cái gì đó mà minh đã biết, có hết rồi, và còn có thể nhận được miễn phí.
+        <p>Mình thực sự nghĩ những gì mình đang nói không phải chỉ để nói với bạn rằng "ồ, trang web của mình thật tuyệt vời". EQ
+            sử dụng các phép đo với B&K
+            kết hợp với tiêu chuẩn bạn chọn mà bạn
+            <strong>hiểu được nó</strong> theo quan điểm của mình là sự lựa chọn hiển nhiên và sẽ dẫn đến những kết quả tốt hơn
+             SoundID rất nhiều. Và đoán xem? <strong>Tất cả tần số phản hồi được đo và cấu hình EQ
+                được tạo bởi autoEQ và
+                được đề xuất ở đây không tốn một xu nào hết</strong>. Bạn chỉ cần sử dụng chúng với bất kỳ phần mềm nào hiện có
+            TRÊN
+            tab Kết quả (Wavelet và Equalizer APO là những phần mềm miễn phí).
         </p>
         <p>
-            You want to tweak you target more? No probs ! Download a frequency response file in <a class="link"
-                href="https://github.com/Shewiiii/webEQ/tree/main/frequency_responses" target="_blank">my repo</a>,
-            import it in <a class="link"
+            Bạn muốn chỉnh lại tiêu chuẩn theo ý muốn của mình? Được thôi ! Tải xuống tệp tần số phản hồi tại <a class="link"
+                href="https://github.com/Shewiiii/webEQ/tree/main/frequency_responses" target="_blank">repo của mình</a>,
+            nhập nó vào <a class="link"
                 href="https://listener800.github.io/5128?share=Custom_Tilt&bass=0&tilt=-1&treble=0&ear=0"
-                target="_blank">Listener's graph tool</a> and autoEQ from here !
+                target="_blank">công cụ biểu đồ của Listener</a> và autoEQ từ đó !
         </p>
         <p>
-            If you REALLY want something similar to
-            Sonarworks, just use the Harman OE 2015 target on autoEQ with Equalizer APO or Wavelet.</p>
-        <h4>Why I'm doing this</h4>
-        <p>Because I'm using it personally and because it's fun to do @w@</p>
-        <p>My motivation was to make my own "AutoEQ" website, but more accurate (since every EQ generated are based on
-            5128 measurements) and with a look that suits me better !</p>
-        <h4>Specs of the EQ</h4>
-        <p>I'm trying to EQ up to 20khz, since the 5128 is accurate enough to allow EQing the full audible
-            range.<br><strong>However</strong>, you should note that all our ears are different, thus the frequency
-            response
-            you will actually hear will be significantly different from the one measured on the 5128. That's why you
-            HAVE to
-            EQ by ear as well if you think something is wrong.</strong></p>
-        <p>
-            On headphones especially, frequency response changes a lot depending on position. This is something you
-            should take into consideration when EQing but also in general when you look at a frequency response graph.
-        </p>
+            Nếu bạn THỰC SỰ muốn cái gì đó tương tự với
+            Sonarworks, hãy dùng tiêu chuẩn Harman OE 2015 trên autoEQ với Equalizer APO hoặc Wavelet.</p>
+        <h4>Vì sao mình lại làm cái này?</h4>
+        <p>Bởi vì mình cũng sử dụng nó cho mục đích cá nhân, và vì nó vui lắm  @w@</p>  <!--and so do translating this :))-->
+        <p>Động lực của mình là tạo ra trang web "AutoEQ" của riêng mình, nhưng chính xác hơn (vì mọi EQ được tạo đều dựa trên
+            phép đo với 5128) và với vẻ ngoài phù hợp với mình hơn!</p>
+            <h4>Thông số của EQ</h4>
+            <p>Mình đang cố gắng EQ lên đến 20khz, vì con 5128 đủ chính xác để cho phép EQ toàn dải âm thanh.
+                <br><strong>Tuy nhiên</strong>, bạn nên lưu ý rằng tai của chúng ta đều khác nhau, do đó tần số
+                phản hồi
+                bạn thực sự sẽ nghe thấy sẽ khác biệt đáng kể so với âm thanh đo được trên 5128. Đó là lý do tại sao bạn
+                PHẢI
+                EQ từng tai luôn nếu bạn thấy có gì đó không ổn.</strong></p>
+            <p>
+                Đặc biệt trên tai nghe chụp tai / trên tai, tần số phản hồi thay đổi rất nhiều tùy theo vị trí. Đây là một cái gì đó bạn
+                nên cân nhắc khi EQing cũng như nói chung khi bạn xem biểu đồ tần số phản hồi.
+            </p>
     </div>
 </div>
 <div style="padding-top: 250px;"></div>
